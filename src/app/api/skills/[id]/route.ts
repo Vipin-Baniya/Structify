@@ -3,34 +3,26 @@ import { connectDB } from "@/lib/db";
 import Skill from "@/models/Skill";
 import { requireAdmin, ok, err, OWNER_ID } from "@/lib/apiHelpers";
 
-type Params = { params: { id: string } };
+export async function GET() {
+  try {
+    await connectDB();
+    const items = await Skill.find({ ownerId: OWNER_ID }).sort({ category: 1, order: 1 }).lean();
+    return ok(items);
+  } catch (e: any) {
+    return err(e.message || "Failed to fetch skills", 500);
+  }
+}
 
-export async function PATCH(req: NextRequest, { params }: Params) {
+export async function POST(req: NextRequest) {
   const { error } = await requireAdmin();
   if (error) return error;
   try {
     await connectDB();
     const body = await req.json();
-    const item = await Skill.findOneAndUpdate(
-      { _id: params.id, ownerId: OWNER_ID },
-      { $set: body },
-      { new: true }
-    );
-    if (!item) return err("Not found", 404);
-    return ok(item);
+    if (!body.name) return err("Name is required");
+    const item = await Skill.create({ ...body, ownerId: OWNER_ID });
+    return ok(item, 201);
   } catch (e: any) {
-    return err(e.message || "Failed to update skill", 500);
-  }
-}
-
-export async function DELETE(_: NextRequest, { params }: Params) {
-  const { error } = await requireAdmin();
-  if (error) return error;
-  try {
-    await connectDB();
-    await Skill.findOneAndDelete({ _id: params.id, ownerId: OWNER_ID });
-    return ok({ deleted: true });
-  } catch (e: any) {
-    return err(e.message || "Failed to delete skill", 500);
+    return err(e.message || "Failed to create skill", 500);
   }
 }
