@@ -1,4 +1,16 @@
-export { default } from "next-auth/middleware";
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
+
+export default withAuth(
+  function middleware(req) {
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => !!token,
+    },
+  }
+);
 
 export const config = {
   matcher: [
@@ -12,5 +24,7 @@ export const config = {
     "/admin/experience/:path*",
     "/admin/testimonials/:path*",
     "/admin/profile/:path*",
+    // NOTE: /admin/login is intentionally NOT listed here
+    // so unauthenticated users can always reach the login page
   ],
 };
