@@ -39,17 +39,16 @@ export default function AdminAchievementsPage() {
     load();
   }
 
-  async function moveItem(id: string, dir: -1 | 1) {
-    const arr = achievements;
-    const idx = arr.findIndex((x: any) => x._id === id);
-    const other = arr[idx + dir];
-    if (!other) return;
-    await Promise.all([
-      fetch(`/api/achievements/${id}`,        { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order: other.order }) }),
-      fetch(`/api/achievements/${other._id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order: arr[idx].order }) }),
-    ]);
-    load();
-  }
+ async function moveItem(id: string, dir: -1 | 1) {
+  const idx = items.findIndex(x => x._id === id);
+  const other = items[idx + dir];
+  if (!other) return;
+  await Promise.all([
+    fetch(`/api/achievements/${id}`,        { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order: other.order }) }),
+    fetch(`/api/achievements/${other._id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order: items[idx].order }) }),
+  ]);
+  load();
+}
 
   async function handleDelete(id: string) {
     if (!confirm("Delete?")) return;
