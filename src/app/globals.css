@@ -39,3 +39,50 @@ main { animation: fadeIn 0.15s ease; }
 /* File tree hover */
 .file-node:hover { background: #1A1A1A; }
 .file-node.active { background: #1ED76012; border-left: 2px solid #1ED760; color: #1ED760; }
+
+/* ── Phase 5 animations ──────────────────────────────────────────── */
+
+/* Staggered card entrance */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up { animation: slideUp 0.35s ease forwards; }
+
+/* Pulse glow for playing indicator */
+@keyframes barPulse {
+  0%, 100% { transform: scaleY(0.4); }
+  50%       { transform: scaleY(1); }
+}
+.animate-bar { animation: barPulse 0.8s ease-in-out infinite; }
+
+/* Shimmer for skeleton loaders */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #1a1a1a 25%, #242424 50%, #1a1a1a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(30, 215, 96, 0.06);
+}
+
+/* Smooth tab underline */
+.tab-active { position: relative; }
+.tab-active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: #1ED760;
+  border-radius: 2px 2px 0 0;
+}
