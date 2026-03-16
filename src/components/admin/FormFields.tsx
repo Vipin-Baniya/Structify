@@ -39,12 +39,17 @@ export function Input({
 }
 
 export function Textarea({
-  value, onChange, placeholder, rows = 4,
+  value,
+  onChange,
+  placeholder,
+  rows = 4,
+  required,
 }: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
   rows?: number;
+  required?: boolean;
 }) {
   return (
     <textarea
