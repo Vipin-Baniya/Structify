@@ -6,6 +6,7 @@ import {
   Menu, X, Home, Folder, Trophy, Award,
   Briefcase, Cpu, User, Mail, Search, BookOpen, Quote,
 } from "lucide-react";
+import { OSThemeSwitcher } from "@/components/core/OSThemeSwitcher";
 
 const NAV = [
   { href: "/home",         icon: Home,      label: "Home" },
@@ -93,7 +94,8 @@ export default function MobileLayout({ active }: { active?: string }) {
             );
           })}
         </nav>
-        <div className="px-6 py-4 border-t border-border">
+        <div className="px-6 py-4 border-t border-border space-y-1">
+          <OSThemeSwitcher />
           <p className="font-mono text-[10px] text-dim">Architect: Vipin Baniya</p>
           <p className="font-mono text-[9px] text-border mt-0.5">v1.0.0 · Structify</p>
         </div>
