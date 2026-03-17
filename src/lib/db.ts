@@ -82,4 +82,3 @@ export async function connectDB() {
     throw e;
   }
 }
-}
