@@ -36,3 +36,26 @@ export async function connectDB() {
 
   return cached.conn;
 }
+
+export async function connectDB() {
+  try {
+    if (cached.conn) return cached.conn;
+
+    if (!cached.promise) {
+      console.log("Connecting to MongoDB...");
+      cached.promise = mongoose.connect(MONGODB_URI, {
+        dbName: "structify",
+        bufferCommands: false,
+      });
+    }
+
+    cached.conn = await cached.promise;
+
+    console.log("MongoDB connected ✅");
+
+    return cached.conn;
+  } catch (e) {
+    console.error("MongoDB ERROR ❌", e);
+    throw e;
+  }
+}
