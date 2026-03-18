@@ -27,7 +27,7 @@ export default function ExperienceView() {
       ) : (
         <div className="space-y-4">
           {items.map(e => (
-            <div key={e._id} className="bg-card border border-border rounded-xl p-5 hover:border-green/30 transition-colors">
+            <div key={e._id} className="card-hover bg-card border border-border rounded-xl p-5 hover:border-green/30">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
                   {e.logoUrl
@@ -61,7 +61,7 @@ export default function ExperienceView() {
                   {e.technologies.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-3">
                       {e.technologies.map(t => (
-                        <span key={t} className="font-mono text-[10px] bg-surface text-dim px-2 py-0.5 rounded">{t}</span>
+                        <span key={t} className="tech-badge font-mono text-[10px] bg-surface text-dim px-2 py-0.5 rounded border border-border/50 hover:border-green/30 hover:text-green">{t}</span>
                       ))}
                     </div>
                   )}

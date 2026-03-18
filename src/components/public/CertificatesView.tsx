@@ -31,7 +31,7 @@ export default function CertificatesView() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map(c => (
-            <div key={c._id} className="bg-card border border-border rounded-xl overflow-hidden hover:border-green/30 transition-colors">
+            <div key={c._id} className="card-hover bg-card border border-border rounded-xl overflow-hidden hover:border-green/30">
               {c.imageUrl ? (
                 <img src={c.imageUrl} alt={c.title} className="w-full h-36 object-cover" />
               ) : (
@@ -48,12 +48,12 @@ export default function CertificatesView() {
                 </div>
                 {c.issuer && <p className="text-muted text-xs mb-2">{c.issuer}</p>}
                 {c.skills.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {c.skills.slice(0, 3).map(s => (
-                      <span key={s} className="font-mono text-[10px] bg-surface text-dim px-2 py-0.5 rounded">{s}</span>
-                    ))}
-                  </div>
-                )}
+                   <div className="flex flex-wrap gap-1 mb-3">
+                     {c.skills.slice(0, 3).map(s => (
+                       <span key={s} className="tech-badge font-mono text-[10px] bg-surface text-dim px-2 py-0.5 rounded border border-border/50 hover:border-green/30 hover:text-green">{s}</span>
+                     ))}
+                   </div>
+                 )}
                 <div className="flex gap-2">
                   {c.verificationUrl && (
                     <a href={c.verificationUrl} target="_blank" rel="noreferrer"

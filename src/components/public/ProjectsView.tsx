@@ -234,7 +234,7 @@ export default function ProjectsView() {
                     {/* Tech stack */}
                     <div className="flex flex-wrap gap-1 mb-3">
                       {p.techStack.slice(0, 3).map(t => (
-                        <span key={t} className="font-mono text-[10px] bg-surface text-dim px-2 py-0.5 rounded">{t}</span>
+                        <span key={t} className="tech-badge font-mono text-[10px] bg-surface text-dim px-2 py-0.5 rounded border border-border/50 hover:border-green/30 hover:text-green">{t}</span>
                       ))}
                       {p.techStack.length > 3 && (
                         <span className="font-mono text-[10px] text-dim">+{p.techStack.length - 3}</span>

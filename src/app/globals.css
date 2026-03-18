@@ -32,31 +32,71 @@ html, body {
 /* Monaco editor container */
 .monaco-editor { border-radius: 0 !important; }
 
-/* Smooth page transitions */
-main { animation: fadeIn 0.15s ease; }
+/* ── Page transitions ─────────────────────────────────────────────── */
+main { animation: fadeIn 0.18s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
-/* File tree hover */
+/* ── Typing cursor ────────────────────────────────────────────────── */
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.9em;
+  background: #1ED760;
+  vertical-align: middle;
+  margin-left: 3px;
+  border-radius: 1px;
+  animation: cursorBlink 0.9s ease-in-out infinite;
+}
+@keyframes cursorBlink {
+  0%, 45%  { opacity: 1; }
+  55%, 100% { opacity: 0; }
+}
+
+/* ── Fade-in-up entrance (hero + sections) ───────────────────────── */
+.animate-fade-in-up {
+  animation: fadeInUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Float (decorative orbs) ─────────────────────────────────────── */
+.animate-float {
+  animation: floatOrb 8s ease-in-out infinite;
+}
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-24px) scale(1.06); }
+}
+
+/* ── Slow ping (status dot) ──────────────────────────────────────── */
+.animate-ping-slow {
+  animation: pingSlow 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes pingSlow {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+/* ── File tree hover ──────────────────────────────────────────────── */
 .file-node:hover { background: #1A1A1A; }
 .file-node.active { background: #1ED76012; border-left: 2px solid #1ED760; color: #1ED760; }
 
-/* ── Phase 5 animations ──────────────────────────────────────────── */
-
-/* Staggered card entrance */
+/* ── Staggered card entrance ─────────────────────────────────────── */
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .animate-slide-up { animation: slideUp 0.35s ease forwards; }
 
-/* Pulse glow for playing indicator */
+/* ── Pulse glow for playing indicator ───────────────────────────── */
 @keyframes barPulse {
   0%, 100% { transform: scaleY(0.4); }
   50%       { transform: scaleY(1); }
 }
 .animate-bar { animation: barPulse 0.8s ease-in-out infinite; }
 
-/* Shimmer for skeleton loaders */
+/* ── Shimmer for skeleton loaders ────────────────────────────────── */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position:  200% 0; }
@@ -67,7 +107,7 @@ main { animation: fadeIn 0.15s ease; }
   animation: shimmer 1.4s infinite;
 }
 
-/* Card hover lift */
+/* ── Card hover lift ─────────────────────────────────────────────── */
 .card-hover {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
@@ -76,7 +116,22 @@ main { animation: fadeIn 0.15s ease; }
   box-shadow: 0 8px 32px rgba(30, 215, 96, 0.06);
 }
 
-/* Smooth tab underline */
+/* ── Glass card ──────────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(24, 24, 24, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+/* ── Glow pulse (interactive elements) ──────────────────────────── */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(30, 215, 96, 0); }
+  50%       { box-shadow: 0 0 18px 4px rgba(30, 215, 96, 0.18); }
+}
+.glow-on-hover:hover { animation: glowPulse 1.6s ease-in-out infinite; }
+
+/* ── Smooth tab underline ────────────────────────────────────────── */
 .tab-active { position: relative; }
 .tab-active::after {
   content: "";
@@ -85,4 +140,27 @@ main { animation: fadeIn 0.15s ease; }
   height: 2px;
   background: #1ED760;
   border-radius: 2px 2px 0 0;
+}
+
+/* ── Tech badge micro-interactions ──────────────────────────────── */
+.tech-badge {
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+.tech-badge:hover {
+  transform: translateY(-1px) scale(1.04);
+}
+
+/* ── Section title reveal ────────────────────────────────────────── */
+.section-reveal {
+  animation: sectionReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes sectionReveal {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Stat counter number ─────────────────────────────────────────── */
+.stat-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }

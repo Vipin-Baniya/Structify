@@ -75,10 +75,13 @@ export default function Sidebar({ active }: { active?: string }) {
         })}
       </nav>
 
-      <div className="px-4 py-3 border-t border-border space-y-1">
-        <OSThemeSwitcher />
-        <p className="font-mono text-[10px] text-dim">Architect: Vipin Baniya</p>
-        <p className="font-mono text-[9px] text-border">v1.0.0 · Structify</p>
+      <div className="px-3 py-3 border-t border-border space-y-2">
+        <div className="bg-card border border-border rounded-xl px-3 py-2 hover:border-green/30 transition-colors">
+          <p className="font-mono text-[9px] text-dim uppercase tracking-wider mb-1.5">Switch OS Theme</p>
+          <OSThemeSwitcher />
+        </div>
+        <p className="font-mono text-[10px] text-dim px-1">Architect: Vipin Baniya</p>
+        <p className="font-mono text-[9px] text-border px-1">v1.0.0 · Structify</p>
       </div>
     </aside>
   );
