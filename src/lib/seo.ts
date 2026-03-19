@@ -54,7 +54,7 @@ export async function getProjectMetadata(slug: string): Promise<Metadata> {
 export function buildBaseMetadata(name: string, tagline: string, bio: string, avatarUrl: string): Metadata {
   const description = bio || `${name} — ${tagline}`;
   return {
-    title:        { default: `Structify — ${tagline}`, template: `%s — Structify` },
+    title:        { default: `${name} - Portfolio`, template: `%s — ${name} - Portfolio` },
     description,
     metadataBase: new URL(BASE_URL),
     openGraph: {
