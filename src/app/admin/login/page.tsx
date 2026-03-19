@@ -3,6 +3,13 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Loader2, Lock } from "lucide-react";
+import { motion } from "framer-motion";
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const, delay },
+});
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -29,15 +36,26 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen bg-bg flex items-center justify-center">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
+        {/* Animated portfolio title */}
+        <motion.div {...fadeUp(0)} className="text-center mb-6">
+          <h1 className="font-display text-3xl font-bold tracking-tight">
+            <span className="text-text">Vipin Baniya</span>
+            <span className="text-green"> — </span>
+            <span className="bg-gradient-to-r from-green to-green/60 bg-clip-text text-transparent">
+              Portfolio
+            </span>
+          </h1>
+        </motion.div>
+
+        <motion.div {...fadeUp(0.1)} className="text-center mb-8">
           <div className="w-12 h-12 rounded-xl bg-green/10 border border-green/30 flex items-center justify-center mx-auto mb-4">
             <Lock size={20} className="text-green" />
           </div>
-          <h1 className="text-2xl font-black text-text">Admin Login</h1>
+          <h2 className="text-2xl font-black text-text">Admin Login</h2>
           <p className="text-muted text-sm mt-1">Structify Control Panel</p>
-        </div>
+        </motion.div>
 
-        <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-6 space-y-4">
+        <motion.form {...fadeUp(0.2)} onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-6 space-y-4">
           <div>
             <label className="block text-xs font-mono text-muted mb-1.5">Email</label>
             <input
@@ -68,7 +86,7 @@ export default function AdminLogin() {
           >
             {loading ? <><Loader2 size={14} className="animate-spin" /> Logging in...</> : "Login"}
           </button>
-        </form>
+        </motion.form>
       </div>
     </div>
   );

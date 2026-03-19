@@ -1,16 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Project, Achievement, Certificate, Skill } from "@/types";
 import { Trophy, Award, ArrowRight, Cpu, TrendingUp, Star, Eye, Play, Zap, GitFork } from "lucide-react";
 import { usePlayer } from "@/components/ui/PlayerContext";
 
-function greeting() {
-  const h = new Date().getHours();
-  if (h < 12) return "Good morning";
-  if (h < 17) return "Good afternoon";
-  return "Good evening";
-}
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const, delay },
+});
 
 const STATUS_COLOR: Record<string, string> = {
   active:    "bg-green/20 text-green",
@@ -77,14 +77,29 @@ export default function HomeView() {
 
   return (
     <div className="space-y-10">
-      {/* ── Greeting ── */}
+      {/* ── Portfolio Title + Greeting ── */}
       <div className={`transition-all duration-500 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
-        <div className="flex items-center gap-2 mb-1">
-          <span className="w-2 h-2 rounded-full bg-green animate-ping-slow" />
-          <span className="text-green font-mono text-[11px] tracking-wider">AVAILABLE FOR WORK</span>
-        </div>
-        <h1 className="text-4xl font-black text-text">{greeting()}, Vipin.</h1>
-        <p className="text-muted text-sm mt-1">Welcome to your engineering identity platform.</p>
+        <motion.div {...fadeUp(0)} className="mb-1">
+          <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+            <span className="text-text">Vipin Baniya</span>
+            <span className="text-green"> — </span>
+            <span className="bg-gradient-to-r from-green to-green/60 bg-clip-text text-transparent">
+              Portfolio
+            </span>
+          </h1>
+        </motion.div>
+        <motion.div {...fadeUp(0.1)} className="mt-4">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="w-2 h-2 rounded-full bg-green animate-ping-slow" />
+            <span className="text-green font-mono text-[11px] tracking-wider">AVAILABLE FOR WORK</span>
+          </div>
+          <h2 className="font-display text-2xl md:text-3xl font-semibold text-text tracking-tight">
+            Greetings, Stranger.
+          </h2>
+          <p className="text-muted text-sm mt-1">
+            Welcome to Vipin&apos;s engineering identity platform.
+          </p>
+        </motion.div>
       </div>
 
       {/* ── Quick-stats strip ── */}
