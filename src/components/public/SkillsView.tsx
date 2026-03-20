@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Skill } from "@/types";
+import { motion } from "framer-motion";
 
 const CATEGORY_META: Record<string, { label: string; color: string; bg: string; mono: string; bar: string }> = {
   "ai-ml":       { label: "AI & Machine Learning", color: "text-purple-400", bg: "bg-purple-500/10",  mono: "◈", bar: "bg-purple-500" },
@@ -59,6 +60,16 @@ function TechRadar({ skills }: { skills: Skill[] }) {
   );
 }
 
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.05 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, scale: 0.95, y: 8 },
+  show:   { opacity: 1, scale: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const } },
+};
+
 export default function SkillsView() {
   const [skills,  setSkills]  = useState<Skill[]>([]);
   const [active,  setActive]  = useState("all");
@@ -84,7 +95,12 @@ export default function SkillsView() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-1">
+      <motion.div
+        className="flex items-center justify-between mb-1"
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
         <h1 className="text-3xl font-black text-text">Skills</h1>
         {/* View toggle */}
         {!loading && skills.length > 0 && (
@@ -99,8 +115,15 @@ export default function SkillsView() {
             </button>
           </div>
         )}
-      </div>
-      <p className="text-muted text-sm mb-6">Technologies, tools, and domains I work in.</p>
+      </motion.div>
+      <motion.p
+        className="text-muted text-sm mb-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        Technologies, tools, and domains I work in.
+      </motion.p>
 
       {/* Tech radar view */}
       {view === "radar" && !loading && <TechRadar skills={skills} />}
@@ -141,14 +164,28 @@ export default function SkillsView() {
             if (!catSkills.length) return null;
             return (
               <section key={cat}>
-                <div className="flex items-center gap-3 mb-4">
+                <motion.div
+                  className="flex items-center gap-3 mb-4"
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                >
                   <span className={`font-mono text-lg ${meta.color}`}>{meta.mono}</span>
                   <h2 className="text-base font-bold text-text">{meta.label}</h2>
                   <span className="font-mono text-[10px] text-dim">{catSkills.length} skill{catSkills.length !== 1 ? "s" : ""}</span>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                </motion.div>
+                <motion.div
+                  className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
+                  variants={container}
+                  initial="hidden"
+                  animate="show"
+                >
                   {catSkills.map(skill => (
-                    <div key={skill._id} className="card-hover bg-card border border-border rounded-xl p-3 hover:border-green/30 group">
+                    <motion.div
+                      key={skill._id}
+                      variants={cardVariant}
+                      className="card-hover bg-card border border-border rounded-xl p-3 hover:border-green/30 group"
+                    >
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div className="flex items-center gap-2 min-w-0">
                           {skill.iconUrl ? (
@@ -160,9 +197,9 @@ export default function SkillsView() {
                         </div>
                       </div>
                       <ProficiencyDots level={skill.proficiency} />
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </section>
             );
           })}

@@ -5,6 +5,7 @@ import { Project } from "@/types";
 import { Search, Briefcase, Star, GitFork, Play, ExternalLink, Github, Shuffle, TrendingUp, Eye, Zap } from "lucide-react";
 import { usePlayer } from "@/components/ui/PlayerContext";
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 
 const RecruiterMode = dynamic(() => import("./RecruiterMode"), { ssr: false });
 
@@ -34,13 +35,22 @@ function shuffleArray<T>(arr: T[]): T[] {
   return a;
 }
 
+const gridContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 16 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } },
+};
+
 export default function ProjectsView() {
   const [projects,      setProjects]      = useState<Project[]>([]);
   const [query,         setQuery]         = useState("");
   const [filter,        setFilter]        = useState("all");
   const [sort,          setSort]          = useState<SortMode>("default");
   const [recruiterMode, setRecruiterMode] = useState(false);
-  const [mounted,       setMounted]       = useState(false);
   const [hoveredId,     setHoveredId]     = useState<string | null>(null);
   const { setProject } = usePlayer();
   const shuffleRef = useRef(false);
@@ -49,7 +59,6 @@ export default function ProjectsView() {
     fetch("/api/projects")
       .then(r => r.json())
       .then(d => Array.isArray(d) && setProjects(d));
-    setTimeout(() => setMounted(true), 50);
   }, []);
 
   // Filtering
@@ -81,7 +90,12 @@ export default function ProjectsView() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-start justify-between gap-4 mb-1">
+      <motion.div
+        className="flex items-start justify-between gap-4 mb-1"
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div>
           <h1 className="text-3xl font-black text-text">Projects</h1>
           <p className="text-muted text-sm mt-0.5">
@@ -95,7 +109,7 @@ export default function ProjectsView() {
           <Briefcase size={13} className="group-hover:scale-110 transition-transform" />
           Recruiter Mode
         </button>
-      </div>
+      </motion.div>
 
       {/* Controls */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6 mt-5">
@@ -148,21 +162,23 @@ export default function ProjectsView() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          variants={gridContainer}
+          initial="hidden"
+          animate="show"
+        >
           {sorted.map((p, i) => {
             const accent = p.color ? "" : CARD_ACCENT[i % CARD_ACCENT.length];
             const isHovered = hoveredId === p._id;
 
             return (
-              <div key={p._id}
+              <motion.div key={p._id}
+                variants={cardVariant}
                 className={`group relative bg-card border border-border rounded-2xl overflow-hidden
-                  transition-all duration-300 cursor-pointer
-                  ${isHovered ? "border-green/40 shadow-lg shadow-green/5 -translate-y-1" : "hover:border-green/20"}
-                  ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-                style={{
-                  transitionDelay: mounted ? `${i * 40}ms` : "0ms",
-                  ...(p.color ? { borderColor: `${p.color}30` } : {}),
-                }}
+                  transition-colors duration-200 cursor-pointer
+                  ${isHovered ? "border-green/40" : ""}`}
+                style={{ ...(p.color ? { borderColor: `${p.color}30` } : {}) }}
                 onMouseEnter={() => setHoveredId(p._id)}
                 onMouseLeave={() => setHoveredId(null)}
               >
@@ -267,10 +283,10 @@ export default function ProjectsView() {
                     </div>
                   </div>
                 </Link>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       )}
 
       {recruiterMode && <RecruiterMode onClose={() => setRecruiterMode(false)} />}

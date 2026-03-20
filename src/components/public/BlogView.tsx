@@ -3,10 +3,21 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Post } from "@/types";
 import { ArrowRight, BookOpen } from "lucide-react";
+import { motion } from "framer-motion";
 
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 16 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } },
+};
 
 export default function BlogView() {
   const [posts, setPosts]   = useState<Post[]>([]);
@@ -21,8 +32,14 @@ export default function BlogView() {
 
   return (
     <div>
-      <h1 className="text-3xl font-black text-text mb-1">Notes</h1>
-      <p className="text-muted text-sm mb-8">Engineering insights, learnings, and ideas.</p>
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <h1 className="text-3xl font-black text-text mb-1">Notes</h1>
+        <p className="text-muted text-sm mb-8">Engineering insights, learnings, and ideas.</p>
+      </motion.div>
 
       {loading ? (
         <div className="space-y-4">
@@ -36,10 +53,18 @@ export default function BlogView() {
           <p className="text-dim text-sm">No notes yet.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <motion.div
+          className="space-y-4"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
           {posts.map(p => (
             <Link key={p._id} href={`/blog/${p.slug}`}>
-              <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-green/30 transition-colors group flex">
+              <motion.div
+                variants={cardVariant}
+                className="bg-card border border-border rounded-xl overflow-hidden hover:border-green/30 transition-colors group flex card-hover"
+              >
                 {p.coverUrl && (
                   <img src={p.coverUrl} alt={p.title} className="w-32 h-full object-cover shrink-0 hidden sm:block" />
                 )}
@@ -56,10 +81,10 @@ export default function BlogView() {
                     <ArrowRight size={12} className="ml-auto text-dim group-hover:text-green transition-colors" />
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </Link>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );

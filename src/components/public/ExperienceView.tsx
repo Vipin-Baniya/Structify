@@ -2,11 +2,22 @@
 import { useEffect, useState } from "react";
 import { Experience } from "@/types";
 import { Briefcase } from "lucide-react";
+import { motion } from "framer-motion";
 
 function fmt(d?: string) {
   if (!d) return "";
   return new Date(d).toLocaleDateString("en-US", { month: "short", year: "numeric" });
 }
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 16 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const } },
+};
 
 export default function ExperienceView() {
   const [items, setItems] = useState<Experience[]>([]);
@@ -17,17 +28,32 @@ export default function ExperienceView() {
 
   return (
     <div>
-      <h1 className="text-3xl font-black text-text mb-1">Experience</h1>
-      <p className="text-muted text-sm mb-6">Roles, contributions, and learnings.</p>
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <h1 className="text-3xl font-black text-text mb-1">Experience</h1>
+        <p className="text-muted text-sm mb-6">Roles, contributions, and learnings.</p>
+      </motion.div>
 
       {items.length === 0 ? (
         <div className="bg-card border border-dashed border-border rounded-xl p-12 text-center">
           <p className="text-dim text-sm">No experience yet. Add one in the admin panel.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <motion.div
+          className="space-y-4"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
           {items.map(e => (
-            <div key={e._id} className="card-hover bg-card border border-border rounded-xl p-5 hover:border-green/30">
+            <motion.div
+              key={e._id}
+              variants={cardVariant}
+              className="card-hover bg-card border border-border rounded-xl p-5 hover:border-green/30"
+            >
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
                   {e.logoUrl
@@ -67,9 +93,9 @@ export default function ExperienceView() {
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );

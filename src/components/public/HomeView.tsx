@@ -324,12 +324,11 @@ function TestimonialsPreview() {
 
 function ProjectCard({ project: p, onPlay, index }: { project: Project; onPlay?: (p: Project) => void; index: number }) {
   return (
-    <div
+    <motion.div
       className="group relative bg-card border border-border rounded-2xl overflow-hidden cursor-pointer card-hover hover:border-green/35"
-      style={{
-        animation: `slideUp 0.4s ease both`,
-        animationDelay: `${index * 50}ms`,
-      }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: index * 0.05 }}
     >
       <Link href={`/projects/${p.slug}`} onClick={() => onPlay?.(p)}>
         {/* Banner */}
@@ -341,7 +340,7 @@ function ProjectCard({ project: p, onPlay, index }: { project: Project; onPlay?:
             <span className="font-mono text-3xl text-green/15 select-none">{"{}"}</span>
             <div className="absolute inset-0 opacity-[0.025]"
               style={{
-                backgroundImage: "linear-gradient(#1ED760 1px, transparent 1px), linear-gradient(90deg, #1ED760 1px, transparent 1px)",
+                backgroundImage: "linear-gradient(#1DB954 1px, transparent 1px), linear-gradient(90deg, #1DB954 1px, transparent 1px)",
                 backgroundSize: "20px 20px",
               }} />
           </div>
@@ -390,7 +389,7 @@ function ProjectCard({ project: p, onPlay, index }: { project: Project; onPlay?:
           )}
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 }
 

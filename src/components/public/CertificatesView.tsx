@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Certificate } from "@/types";
 import { Award, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
 
 const CAT_COLOR: Record<string, string> = {
   programming: "bg-blue-500/20 text-blue-400",
@@ -10,6 +11,16 @@ const CAT_COLOR: Record<string, string> = {
   systems:     "bg-orange-500/20 text-orange-400",
   design:      "bg-pink-500/20 text-pink-400",
   other:       "bg-gray-500/20 text-gray-400",
+};
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 16 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
 export default function CertificatesView() {
@@ -21,17 +32,32 @@ export default function CertificatesView() {
 
   return (
     <div>
-      <h1 className="text-3xl font-black text-text mb-1">Certificates</h1>
-      <p className="text-muted text-sm mb-6">Verified skills and completed programs.</p>
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <h1 className="text-3xl font-black text-text mb-1">Certificates</h1>
+        <p className="text-muted text-sm mb-6">Verified skills and completed programs.</p>
+      </motion.div>
 
       {items.length === 0 ? (
         <div className="bg-card border border-dashed border-border rounded-xl p-12 text-center">
           <p className="text-dim text-sm">No certificates yet. Add one in the admin panel.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
           {items.map(c => (
-            <div key={c._id} className="card-hover bg-card border border-border rounded-xl overflow-hidden hover:border-green/30">
+            <motion.div
+              key={c._id}
+              variants={cardVariant}
+              className="card-hover bg-card border border-border rounded-xl overflow-hidden hover:border-green/30"
+            >
               {c.imageUrl ? (
                 <img src={c.imageUrl} alt={c.title} className="w-full h-36 object-cover" />
               ) : (
@@ -69,9 +95,9 @@ export default function CertificatesView() {
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );

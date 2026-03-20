@@ -16,10 +16,10 @@ const DEFAULTS = {
     { title: "Depth over decoration",      description: "Substance drives lasting impact." },
   ],
   links: [
-    { label: "GitHub",   icon: "⌥", href: "https://github.com/vipinbaniya",      color: "#EAEAEA" },
+    { label: "GitHub",   icon: "⌥", href: "https://github.com/vipinbaniya",      color: "#FFFFFF" },
     { label: "LinkedIn", icon: "⊞", href: "https://linkedin.com/in/vipinbaniya", color: "#3D9DF2" },
     { label: "LeetCode", icon: "◈", href: "https://leetcode.com/vipinbaniya",    color: "#F59E0B" },
-    { label: "Email",    icon: "◌", href: "mailto:vipin@example.com",             color: "#1ED760" },
+    { label: "Email",    icon: "◌", href: "mailto:vipin@example.com",             color: "#1DB954" },
   ],
 };
 

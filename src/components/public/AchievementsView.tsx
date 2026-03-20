@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Achievement } from "@/types";
 import { Trophy, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
 
 const TYPE_COLOR: Record<string, string> = {
   hackathon:   "bg-orange-500/20 text-orange-400",
@@ -10,6 +11,16 @@ const TYPE_COLOR: Record<string, string> = {
   competition: "bg-pink-500/20 text-pink-400",
   research:    "bg-purple-500/20 text-purple-400",
   other:       "bg-gray-500/20 text-gray-400",
+};
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 16 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
 export default function AchievementsView() {
@@ -21,17 +32,32 @@ export default function AchievementsView() {
 
   return (
     <div>
-      <h1 className="text-3xl font-black text-text mb-1">Achievements</h1>
-      <p className="text-muted text-sm mb-6">Milestones, awards, and recognition.</p>
+      <motion.div
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <h1 className="text-3xl font-black text-text mb-1">Achievements</h1>
+        <p className="text-muted text-sm mb-6">Milestones, awards, and recognition.</p>
+      </motion.div>
 
       {items.length === 0 ? (
         <div className="bg-card border border-dashed border-border rounded-xl p-12 text-center">
           <p className="text-dim text-sm">No achievements yet. Add one in the admin panel.</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <motion.div
+          className="space-y-3"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
           {items.map(a => (
-            <div key={a._id} className="card-hover bg-card border border-border rounded-xl p-5 hover:border-green/30">
+            <motion.div
+              key={a._id}
+              variants={cardVariant}
+              className="card-hover bg-card border border-border rounded-xl p-5 hover:border-green/30"
+            >
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center shrink-0">
                   <Trophy size={18} className="text-yellow-400" />
@@ -65,9 +91,9 @@ export default function AchievementsView() {
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );

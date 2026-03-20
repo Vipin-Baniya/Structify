@@ -24,7 +24,7 @@ export default function LandingPage() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(#1ED76006 1px, transparent 1px), linear-gradient(90deg, #1ED76006 1px, transparent 1px)",
+            "linear-gradient(#1DB95406 1px, transparent 1px), linear-gradient(90deg, #1DB95406 1px, transparent 1px)",
           backgroundSize: "44px 44px",
         }}
       />
@@ -36,7 +36,7 @@ export default function LandingPage() {
           top: "44%", left: "50%",
           transform: "translate(-50%,-50%)",
           width: 800, height: 800,
-          background: "radial-gradient(circle, #1ED76010 0%, transparent 62%)",
+          background: "radial-gradient(circle, #1DB95410 0%, transparent 62%)",
         }}
       />
 
@@ -51,7 +51,7 @@ export default function LandingPage() {
             top: orb.top,
             left: (orb as { left?: string }).left,
             right: (orb as { right?: string }).right,
-            background: `radial-gradient(circle, #1ED760 0%, transparent 70%)`,
+            background: `radial-gradient(circle, #1DB954 0%, transparent 70%)`,
             opacity: orb.opacity,
             filter: "blur(60px)",
             animationDelay: `${orb.delay}s`,
@@ -118,7 +118,7 @@ export default function LandingPage() {
           <Link
             href="/home"
             className="group px-8 py-3.5 rounded-full bg-green text-bg font-mono font-bold text-sm
-                       hover:scale-105 hover:shadow-[0_0_40px_#1ED76050] transition-all duration-200 relative overflow-hidden"
+                       hover:scale-105 hover:shadow-[0_0_40px_#1DB95450] transition-all duration-200 relative overflow-hidden"
           >
             <span className="relative z-10">▶ Explore Portfolio</span>
             <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
