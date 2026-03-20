@@ -4,7 +4,7 @@ import Profile from "@/models/Profile";
 import Project from "@/models/Project";
 
 const OWNER_ID = process.env.OWNER_ID || "vipin";
-const BASE_URL = process.env.NEXTAUTH_URL || "https://structify.vercel.app";
+const BASE_URL = process.env.NEXTAUTH_URL || "https://vipinbaniya.dev";
 
 export async function getSiteMetadata(): Promise<{ name: string; tagline: string; bio: string; avatarUrl: string }> {
   try {
@@ -28,7 +28,7 @@ export async function getProjectMetadata(slug: string): Promise<Metadata> {
     const project = await Project.findOne({ slug, ownerId: OWNER_ID }).lean() as any;
     if (project) {
       return {
-        title:       `${project.title} — Structify`,
+        title:       `${project.title} — Vipin Baniya`,
         description: project.description || `${project.title} — built with ${project.techStack?.join(", ")}`,
         openGraph: {
           title:       project.title,
@@ -46,27 +46,27 @@ export async function getProjectMetadata(slug: string): Promise<Metadata> {
     }
   } catch { /* fallback */ }
   return {
-    title: "Project — Structify",
-    description: "Engineering project on Structify.",
+    title: "Project — Vipin Baniya",
+    description: "Engineering project by Vipin Baniya.",
   };
 }
 
 export function buildBaseMetadata(name: string, tagline: string, bio: string, avatarUrl: string): Metadata {
   const description = bio || `${name} — ${tagline}`;
   return {
-    title:        { default: `${name} - Portfolio`, template: `%s — ${name} - Portfolio` },
+    title:        { default: `${name} — ${tagline}`, template: `%s · Vipin Baniya` },
     description,
     metadataBase: new URL(BASE_URL),
     openGraph: {
-      title:       `Structify — ${name}`,
+      title:       `${name} — Portfolio`,
       description,
       type:        "website",
-      siteName:    "Structify",
+      siteName:    "Vipin Baniya",
       ...(avatarUrl ? { images: [{ url: avatarUrl }] } : {}),
     },
     twitter: {
       card:        "summary",
-      title:       `Structify — ${name}`,
+      title:       `${name} — Portfolio`,
       description,
     },
   };

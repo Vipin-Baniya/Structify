@@ -43,7 +43,7 @@ export async function GET() {
       meta: {
         version:   "1.0",
         generated: new Date().toISOString(),
-        source:    "Structify — https://github.com/structify",
+        source:    "https://vipinbaniya.dev",
       },
       profile: profile
         ? {

@@ -26,9 +26,9 @@ export default function AdminSidebar() {
     <aside className="w-56 shrink-0 bg-surface border-r border-border flex flex-col h-full">
       <div className="px-5 py-5 border-b border-border">
         <div className="flex items-center gap-2">
-          <span className="w-6 h-6 rounded bg-green flex items-center justify-center text-bg font-black text-[10px]">S</span>
+          <span className="w-6 h-6 rounded bg-green flex items-center justify-center text-bg font-black text-[10px]">V</span>
           <div>
-            <p className="font-black text-text text-xs">Structify</p>
+            <p className="font-black text-text text-xs">Vipin Baniya</p>
             <p className="font-mono text-[9px] text-dim">Admin Panel</p>
           </div>
         </div>

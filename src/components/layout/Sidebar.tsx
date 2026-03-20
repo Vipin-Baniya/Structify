@@ -39,8 +39,10 @@ export default function Sidebar({ active }: { active?: string }) {
     <aside className="w-60 shrink-0 bg-surface border-r border-border flex flex-col h-full">
       <div className="px-6 py-6 border-b border-border">
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="w-7 h-7 rounded-md bg-green flex items-center justify-center text-bg font-black text-xs">S</span>
-          <span className="font-black text-text tracking-tight text-sm">Structify</span>
+          <span className="w-7 h-7 rounded-md bg-green flex items-center justify-center text-bg font-black text-xs">V</span>
+          <div>
+            <span className="font-black text-text tracking-tight text-sm block leading-tight">Vipin Baniya</span>
+          </div>
         </Link>
       </div>
 
@@ -85,7 +87,7 @@ export default function Sidebar({ active }: { active?: string }) {
           <OSThemeSwitcher />
         </div>
         <p className="font-mono text-[10px] text-dim px-1">Architect: Vipin Baniya</p>
-        <p className="font-mono text-[9px] text-border px-1">v1.0.0 · Structify</p>
+        <p className="font-mono text-[9px] text-border px-1">vipinbaniya.dev</p>
       </div>
     </aside>
   );

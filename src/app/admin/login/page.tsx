@@ -52,7 +52,7 @@ export default function AdminLogin() {
             <Lock size={20} className="text-green" />
           </div>
           <h2 className="text-2xl font-black text-text">Admin Login</h2>
-          <p className="text-muted text-sm mt-1">Structify Control Panel</p>
+          <p className="text-muted text-sm mt-1">Admin Panel</p>
         </motion.div>
 
         <motion.form {...fadeUp(0.2)} onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-6 space-y-4">

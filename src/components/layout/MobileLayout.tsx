@@ -46,8 +46,8 @@ export default function MobileLayout({ active }: { active?: string }) {
       {/* Fixed mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-surface border-b border-border flex items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
-          <span className="w-7 h-7 rounded-md bg-green flex items-center justify-center text-bg font-black text-xs">S</span>
-          <span className="font-black text-text tracking-tight text-sm">Structify</span>
+          <span className="w-7 h-7 rounded-md bg-green flex items-center justify-center text-bg font-black text-xs">V</span>
+          <span className="font-black text-text tracking-tight text-sm">Vipin Baniya</span>
         </Link>
         <button onClick={() => setOpen(v => !v)}
           className="w-9 h-9 flex items-center justify-center rounded-lg text-muted hover:text-text hover:bg-white/5 transition-colors"
@@ -66,8 +66,8 @@ export default function MobileLayout({ active }: { active?: string }) {
           transition-transform duration-200 ease-in-out ${open ? "translate-x-0" : "-translate-x-full"}`}>
         <div className="px-5 py-4 border-b border-border flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-            <span className="w-7 h-7 rounded-md bg-green flex items-center justify-center text-bg font-black text-xs">S</span>
-            <span className="font-black text-text tracking-tight text-sm">Structify</span>
+            <span className="w-7 h-7 rounded-md bg-green flex items-center justify-center text-bg font-black text-xs">V</span>
+            <span className="font-black text-text tracking-tight text-sm">Vipin Baniya</span>
           </Link>
           <button onClick={() => setOpen(false)} className="text-muted hover:text-text transition-colors">
             <X size={16} />
@@ -98,7 +98,7 @@ export default function MobileLayout({ active }: { active?: string }) {
         <div className="px-6 py-4 border-t border-border space-y-1">
           <OSThemeSwitcher />
           <p className="font-mono text-[10px] text-dim">Architect: Vipin Baniya</p>
-          <p className="font-mono text-[9px] text-border mt-0.5">v1.0.0 · Structify</p>
+          <p className="font-mono text-[9px] text-border mt-0.5">vipinbaniya.dev</p>
         </div>
       </div>
     </>

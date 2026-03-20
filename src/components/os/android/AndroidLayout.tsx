@@ -127,7 +127,7 @@ export default function AndroidLayout({
                   );
                 })}
               </div>
-              <div className="px-5 py-4 text-xs" style={{ color: M3.dim }}>Vipin Baniya · v1.0.0</div>
+              <div className="px-5 py-4 text-xs" style={{ color: M3.dim }}>Vipin Baniya · vipinbaniya.dev</div>
             </nav>
           </div>
         )}

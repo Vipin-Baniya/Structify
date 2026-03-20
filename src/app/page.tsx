@@ -72,7 +72,7 @@ export default function LandingPage() {
           position: "fixed",
           inset: 0,
           zIndex: 0,
-          background: `radial-gradient(600px circle at ${mouse.x}px ${mouse.y}px, #1DB95418, transparent 50%)`,
+          background: `radial-gradient(600px circle at ${mouse.x}px ${mouse.y}px, color-mix(in srgb, var(--accent) 8%, transparent), transparent 50%)`,
           transition: "background 0.1s ease",
         }}
       />
@@ -82,7 +82,7 @@ export default function LandingPage() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(#1DB95406 1px, transparent 1px), linear-gradient(90deg, #1DB95406 1px, transparent 1px)",
+            "linear-gradient(var(--accent)05 1px, transparent 1px), linear-gradient(90deg, var(--accent)05 1px, transparent 1px)",
           backgroundSize: "44px 44px",
         }}
       />
@@ -93,8 +93,8 @@ export default function LandingPage() {
         style={{
           top: "44%", left: "50%",
           transform: "translate(-50%,-50%)",
-          width: 800, height: 800,
-          background: "radial-gradient(circle, #1DB95410 0%, transparent 62%)",
+          width: 700, height: 700,
+          background: "radial-gradient(circle, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 65%)",
         }}
       />
 
@@ -109,7 +109,7 @@ export default function LandingPage() {
             top: orb.top,
             left: (orb as { left?: string }).left,
             right: (orb as { right?: string }).right,
-            background: `radial-gradient(circle, #1DB954 0%, transparent 70%)`,
+            background: `radial-gradient(circle, var(--accent) 0%, transparent 70%)`,
             opacity: orb.opacity,
             filter: "blur(60px)",
             animationDelay: `${orb.delay}s`,
@@ -135,7 +135,7 @@ export default function LandingPage() {
       <div className="relative text-center max-w-2xl px-6" style={{ zIndex: 1 }}>
         <motion.div {...fadeUp(0)} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-green/20 bg-green/5 mb-8">
           <span className="w-1.5 h-1.5 rounded-full bg-green animate-ping-slow" />
-          <span className="text-green font-mono text-[11px] tracking-[0.3em]">&#x25C8; AVAILABLE FOR WORK</span>
+          <span className="font-mono text-xs tracking-[0.35em] opacity-80" style={{ color: "var(--accent)" }}>&#x25C8; VIPIN BANIYA</span>
         </motion.div>
 
         <motion.h1
@@ -170,8 +170,15 @@ export default function LandingPage() {
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link
               href="/home"
-              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-green text-bg font-mono font-bold text-sm
-                         shadow-[0_0_30px_#1DB95430] hover:shadow-[0_0_50px_#1DB95460] transition-shadow duration-200 relative overflow-hidden"
+              className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-mono font-bold text-sm
+                         transition-all duration-200 relative overflow-hidden"
+              style={{
+                background: "var(--accent)",
+                color: "var(--bg)",
+                boxShadow: "0 0 0px var(--accent)",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 50px color-mix(in srgb, var(--accent) 40%, transparent)")}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 0 0px var(--accent)")}
             >
               <span className="relative z-10">&#x25B6; Explore Portfolio</span>
               <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -202,7 +209,7 @@ export default function LandingPage() {
         </motion.p>
 
         <motion.p {...fadeUp(0.6)} className="mt-8 text-xs text-border font-mono">
-          v1.0.0 &middot; Vipin Baniya - Portfolio
+          vipinbaniya.dev
         </motion.p>
       </div>
     </main>
