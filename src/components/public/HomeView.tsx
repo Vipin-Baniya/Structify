@@ -129,6 +129,22 @@ export default function HomeView() {
         )}
       </section>
 
+
+      {/* ── Live Dashboard ── */}
+      <section className={`transition-all duration-500 delay-[175ms] ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
+        <div className="mb-4">
+          <span className="font-mono text-[10px] bg-clip-text text-transparent bg-gradient-to-r from-green to-green/50">
+            {"// LIVE · DASHBOARD"}
+          </span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <LiveStatCard label="LeetCode" value={300} suffix="+" color="text-yellow-400" icon="♥" />
+          <LiveStatCard label="GFG Score" value={1200} suffix="+" color="text-green" icon="⚡" />
+          <LiveStatCard label="GitHub Commits" value={500} suffix="+" color="text-blue-400" icon="○" />
+          <LiveStatCard label="Projects Built" value={projects.length} suffix="" color="text-purple-400" icon="▦" />
+        </div>
+      </section>
+
       {/* ── Skills strip ── */}
       {skills.length > 0 && (
         <section className={`transition-all duration-500 delay-200 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
@@ -397,6 +413,28 @@ function EmptyState({ message }: { message: string }) {
   return (
     <div className="bg-card border border-border border-dashed rounded-xl p-8 text-center">
       <p className="text-dim text-sm">{message}</p>
+    </div>
+  );
+}
+
+function LiveStatCard({ label, value, suffix, color, icon }: {
+  label: string;
+  value: number;
+  suffix: string;
+  color: string;
+  icon: string;
+}) {
+  const count = useCountUp(value);
+  return (
+    <div className="bg-card border border-border rounded-2xl p-4 hover:border-green/20 transition-colors group">
+      <div className="flex items-center justify-between mb-2">
+        <span className={`text-lg ${color}`}>{icon}</span>
+        <span className="font-mono text-[8px] text-dim uppercase tracking-widest">live</span>
+      </div>
+      <p className={`font-black text-2xl leading-none ${color}`}>
+        {count}{suffix}
+      </p>
+      <p className="font-mono text-[10px] text-muted mt-1">{label}</p>
     </div>
   );
 }
