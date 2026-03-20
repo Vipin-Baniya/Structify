@@ -138,7 +138,7 @@ export default function AdminProfilePage() {
 
         {/* ── Basic Info ─────────────────────────────────────────── */}
         <section className="bg-card border border-border rounded-xl p-6 space-y-4">
-          <p className="font-mono text-[10px] text-muted">// BASIC INFO</p>
+          <p className="font-mono text-[10px] text-muted">{"// BASIC INFO"}</p>
 
           <div className="grid grid-cols-2 gap-4">
             <Field label="Your Name">
@@ -183,7 +183,7 @@ export default function AdminProfilePage() {
         {/* ── Philosophy ─────────────────────────────────────────── */}
         <section className="bg-card border border-border rounded-xl p-6 space-y-3">
           <div className="flex items-center justify-between">
-            <p className="font-mono text-[10px] text-muted">// PHILOSOPHY</p>
+            <p className="font-mono text-[10px] text-muted">{"// PHILOSOPHY"}</p>
             <button type="button" onClick={addPhilosophy}
               className="flex items-center gap-1.5 text-xs text-green hover:opacity-80 font-mono transition-opacity">
               <Plus size={12} /> Add entry
@@ -230,7 +230,7 @@ export default function AdminProfilePage() {
         {/* ── Contact Links ──────────────────────────────────────── */}
         <section className="bg-card border border-border rounded-xl p-6 space-y-3">
           <div className="flex items-center justify-between">
-            <p className="font-mono text-[10px] text-muted">// CONTACT LINKS</p>
+            <p className="font-mono text-[10px] text-muted">{"// CONTACT LINKS"}</p>
             <button type="button" onClick={addLink}
               className="flex items-center gap-1.5 text-xs text-green hover:opacity-80 font-mono transition-opacity">
               <Plus size={12} /> Add link

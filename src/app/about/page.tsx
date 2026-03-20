@@ -37,7 +37,7 @@ export default function AboutPage() {
         <div className="space-y-4">
           {/* Bio */}
           <div className="bg-card border border-border rounded-2xl p-5">
-            <p className="font-mono text-[10px] text-muted mb-3">// WHO I AM</p>
+            <p className="font-mono text-[10px] text-muted mb-3">{"// WHO I AM"}</p>
             {profile ? (
               <div className="flex items-start gap-4">
                 {profile.avatarUrl && (
@@ -61,7 +61,7 @@ export default function AboutPage() {
           {/* Philosophy */}
           {philosophy.length > 0 && (
             <div className="bg-card border border-border rounded-2xl p-5">
-              <p className="font-mono text-[10px] text-muted mb-4">// PHILOSOPHY</p>
+              <p className="font-mono text-[10px] text-muted mb-4">{"// PHILOSOPHY"}</p>
               {philosophy.map((p, i) => (
                 <div key={i} className="flex gap-3 mb-3 last:mb-0">
                   <span className="text-green text-sm flex-shrink-0 mt-0.5">◆</span>

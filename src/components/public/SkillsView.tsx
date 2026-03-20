@@ -35,7 +35,7 @@ function TechRadar({ skills }: { skills: Skill[] }) {
 
   return (
     <div className="bg-card border border-border rounded-xl p-5 mb-8">
-      <p className="font-mono text-[10px] text-muted mb-4">// TECH RADAR — avg. proficiency by domain</p>
+      <p className="font-mono text-[10px] text-muted mb-4">{"// TECH RADAR — avg. proficiency by domain"}</p>
       <div className="space-y-3">
         {categories.map(([cat, arr]) => {
           const meta = CATEGORY_META[cat] ?? CATEGORY_META.other;

@@ -137,7 +137,7 @@ export default function RecruiterMode({ onClose }: RecruiterModeProps) {
             {/* Long description */}
             {project.longDescription && (
               <div className="bg-card border border-border rounded-xl p-6 mb-8 text-left">
-                <p className="font-mono text-[10px] text-muted mb-3">// ABOUT THIS PROJECT</p>
+                <p className="font-mono text-[10px] text-muted mb-3">{"// ABOUT THIS PROJECT"}</p>
                 <p className="text-text text-sm leading-relaxed whitespace-pre-wrap">{project.longDescription}</p>
               </div>
             )}

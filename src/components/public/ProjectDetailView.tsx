@@ -288,7 +288,7 @@ export default function ProjectDetailView({ slug }: { slug: string }) {
 
       {project.longDescription && (
         <div className="bg-card border border-border rounded-xl p-5">
-          <p className="font-mono text-[10px] text-muted mb-3">// ABOUT THIS PROJECT</p>
+          <p className="font-mono text-[10px] text-muted mb-3">{"// ABOUT THIS PROJECT"}</p>
           <p className="text-text text-sm leading-relaxed whitespace-pre-wrap">{project.longDescription}</p>
         </div>
       )}
@@ -372,7 +372,7 @@ export default function ProjectDetailView({ slug }: { slug: string }) {
               )}
               {fileHighlights.length > 0 && (
                 <div className="border-t border-border p-4 space-y-3 bg-surface">
-                  <p className="font-mono text-[10px] text-muted">// CODE HIGHLIGHTS</p>
+                  <p className="font-mono text-[10px] text-muted">{"// CODE HIGHLIGHTS"}</p>
                   {fileHighlights.map(h => (
                     <div key={h._id} className="bg-card border border-border rounded-xl p-4">
                       <div className="flex items-center gap-2 mb-2">
@@ -394,7 +394,7 @@ export default function ProjectDetailView({ slug }: { slug: string }) {
               {project.architectureUrl && <img src={project.architectureUrl} alt="Architecture" className="w-full rounded-xl border border-border" />}
               {project.architectureDiagram && (
                 <div className="bg-surface border border-border rounded-xl p-5">
-                  <p className="font-mono text-[10px] text-muted mb-3">// SYSTEM DESCRIPTION</p>
+                  <p className="font-mono text-[10px] text-muted mb-3">{"// SYSTEM DESCRIPTION"}</p>
                   <pre className="text-text text-sm leading-relaxed whitespace-pre-wrap font-mono text-xs">{project.architectureDiagram}</pre>
                 </div>
               )}
