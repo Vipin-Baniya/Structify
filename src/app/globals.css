@@ -177,3 +177,13 @@ main { animation: fadeIn 0.18s ease; }
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
 }
+
+/* ── Spotify explore category card ──────────────────────────────── */
+.spotify-category-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.spotify-category-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}

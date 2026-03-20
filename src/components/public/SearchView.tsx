@@ -19,6 +19,18 @@ const STATUS_COLOR: Record<string, string> = {
   research:  "bg-purple-500/20 text-purple-400",
 };
 
+const BROWSE_CATEGORIES = [
+  { label: "Projects",      href: "/projects",      emoji: "🗂️",  gradient: "from-[#1d62d6] to-[#0d3d8e]" },
+  { label: "Skills",        href: "/skills",        emoji: "⚡",   gradient: "from-[#e8712a] to-[#8b3f10]" },
+  { label: "Achievements",  href: "/achievements",  emoji: "🏆",  gradient: "from-[#c6a227] to-[#7a5e0a]" },
+  { label: "Certificates",  href: "/certificates",  emoji: "🎓",  gradient: "from-[#8b46d4] to-[#4a1a80]" },
+  { label: "Experience",    href: "/experience",    emoji: "💼",  gradient: "from-[#1db954] to-[#0d6e31]" },
+  { label: "Notes",         href: "/blog",          emoji: "📝",  gradient: "from-[#e8457a] to-[#8b1a3e]" },
+  { label: "Testimonials",  href: "/testimonials",  emoji: "💬",  gradient: "from-[#1ba0a0] to-[#0a5555]" },
+  { label: "About",         href: "/about",         emoji: "👤",  gradient: "from-[#5c7a9e] to-[#2a3d52]" },
+  { label: "Contact",       href: "/contact",       emoji: "📬",  gradient: "from-[#d94f4f] to-[#7a1e1e]" },
+];
+
 export default function SearchView() {
   const router       = useRouter();
   const searchParams = useSearchParams();
@@ -62,40 +74,68 @@ export default function SearchView() {
   const total = results.projects.length + results.achievements.length +
                 results.certificates.length + results.skills.length;
 
+  const isIdle = query.length < 2 && !loading;
+
   return (
     <div className="max-w-3xl">
       <h1 className="text-3xl font-black text-text mb-6">Search</h1>
 
-      {/* Search input */}
+      {/* Spotify-style search bar: white background, dark text, pill shape */}
       <div className="relative mb-8">
-        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-dim" />
+        <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#121212] pointer-events-none z-10" />
         {loading && (
-          <Loader2 size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-green animate-spin" />
+          <Loader2 size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#121212] animate-spin z-10" />
         )}
         <input
           ref={inputRef}
           value={query}
           onChange={e => handleChange(e.target.value)}
-          placeholder="Search projects, skills, achievements..."
-          className="w-full bg-card border border-border rounded-xl pl-11 pr-11 py-3 text-text text-sm outline-none focus:border-green/40 transition-colors"
+          placeholder="What do you want to find?"
+          className="w-full bg-white text-[#121212] placeholder:text-[#6b6b6b] rounded-full pl-12 pr-12 py-3.5 text-sm font-medium outline-none shadow-lg transition-all duration-200 focus:shadow-[0_0_0_3px_rgba(29,185,84,0.5)] focus:scale-[1.01]"
         />
       </div>
 
-      {/* Results */}
-      {!searched && !loading && (
-        <div className="text-center py-16">
-          <p className="text-dim text-sm">Type at least 2 characters to search.</p>
+      {/* Browse all — shown when idle (no active search query) */}
+      {isIdle && (
+        <section className="animate-fade-in-up">
+          <h2 className="text-xl font-bold text-text mb-4">Browse all</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {BROWSE_CATEGORIES.map(cat => (
+              <Link
+                key={cat.href}
+                href={cat.href}
+                className={`spotify-category-card relative h-32 rounded-xl overflow-hidden bg-gradient-to-br ${cat.gradient} select-none`}
+              >
+                <span className="absolute top-4 left-4 font-bold text-white text-base leading-tight drop-shadow">
+                  {cat.label}
+                </span>
+                <span className="absolute -bottom-2 -right-1 text-[4.5rem] leading-none rotate-[-15deg] drop-shadow-lg select-none pointer-events-none">
+                  {cat.emoji}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Loading state */}
+      {loading && (
+        <div className="flex justify-center py-12">
+          <Loader2 size={24} className="text-green animate-spin" />
         </div>
       )}
 
-      {searched && total === 0 && (
+      {/* No results */}
+      {searched && !loading && total === 0 && (
         <div className="bg-card border border-dashed border-border rounded-xl p-12 text-center">
-          <p className="text-dim text-sm">No results for &ldquo;{query}&rdquo;</p>
+          <p className="text-text font-bold text-lg mb-1">No results found for &ldquo;{query}&rdquo;</p>
+          <p className="text-dim text-sm">Make sure all words are spelled correctly, or try different keywords.</p>
         </div>
       )}
 
-      {searched && total > 0 && (
-        <div className="space-y-8">
+      {/* Search results */}
+      {searched && !loading && total > 0 && (
+        <div className="space-y-8 animate-fade-in-up">
           {/* Projects */}
           {results.projects.length > 0 && (
             <section>
@@ -107,7 +147,7 @@ export default function SearchView() {
               <div className="space-y-2">
                 {results.projects.map(p => (
                   <Link key={p._id} href={`/projects/${p.slug}`}
-                    className="flex items-center gap-3 bg-card border border-border rounded-xl p-4 hover:border-green/30 transition-colors group">
+                    className="flex items-center gap-3 bg-card border border-border rounded-xl p-4 hover:bg-[#1a1a1a] hover:border-green/30 transition-all group">
                     {p.banner
                       ? <img src={p.banner} alt={p.title} className="w-12 h-9 rounded-lg object-cover flex-shrink-0" />
                       : <div className="w-12 h-9 rounded-lg bg-green/10 flex items-center justify-center flex-shrink-0 font-mono text-green/30 text-xs">{"{}"}</div>
@@ -136,7 +176,7 @@ export default function SearchView() {
               <div className="flex flex-wrap gap-2">
                 {results.skills.map(s => (
                   <Link key={s._id} href="/skills"
-                    className="flex items-center gap-2 bg-card border border-border rounded-lg px-3 py-2 text-sm text-text hover:border-green/30 transition-colors">
+                    className="flex items-center gap-2 bg-card border border-border rounded-lg px-3 py-2 text-sm text-text hover:bg-[#1a1a1a] hover:border-green/30 transition-all">
                     {s.name}
                     <div className="flex gap-0.5">
                       {[1,2,3,4,5].map(i => (
@@ -160,7 +200,7 @@ export default function SearchView() {
               <div className="space-y-2">
                 {results.achievements.map(a => (
                   <Link key={a._id} href="/achievements"
-                    className="flex items-center gap-3 bg-card border border-border rounded-xl p-4 hover:border-green/30 transition-colors group">
+                    className="flex items-center gap-3 bg-card border border-border rounded-xl p-4 hover:bg-[#1a1a1a] hover:border-green/30 transition-all group">
                     <div className="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center flex-shrink-0">
                       <Trophy size={14} className="text-yellow-400" />
                     </div>
@@ -186,7 +226,7 @@ export default function SearchView() {
               <div className="space-y-2">
                 {results.certificates.map(c => (
                   <Link key={c._id} href="/certificates"
-                    className="flex items-center gap-3 bg-card border border-border rounded-xl p-4 hover:border-green/30 transition-colors group">
+                    className="flex items-center gap-3 bg-card border border-border rounded-xl p-4 hover:bg-[#1a1a1a] hover:border-green/30 transition-all group">
                     <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
                       <Award size={14} className="text-blue-400" />
                     </div>
