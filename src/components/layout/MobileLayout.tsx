@@ -4,12 +4,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Menu, X, Home, Folder, Trophy, Award,
-  Briefcase, Cpu, User, Mail, Search, BookOpen, Quote,
+  Briefcase, Cpu, User, Mail, Search, BookOpen, Quote, Compass,
 } from "lucide-react";
 import { OSThemeSwitcher } from "@/components/core/OSThemeSwitcher";
 
 const NAV = [
   { href: "/home",         icon: Home,      label: "Home" },
+  { href: "/explore",      icon: Compass,   label: "Explore" },
   { href: "/projects",     icon: Folder,    label: "Projects" },
   { href: "/skills",       icon: Cpu,       label: "Skills" },
   { href: "/blog",         icon: BookOpen,  label: "Notes" },
