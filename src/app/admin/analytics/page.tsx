@@ -116,7 +116,7 @@ export default function AdminAnalyticsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Project views bar chart */}
         <div className="bg-card border border-border rounded-xl p-5">
-          <p className="font-mono text-[10px] text-muted mb-4">// PROJECT VIEWS LEADERBOARD</p>
+          <p className="font-mono text-[10px] text-muted mb-4">{"// PROJECT VIEWS LEADERBOARD"}</p>
           {loading ? (
             <div className="space-y-3">
               {[...Array(5)].map((_, i) => <div key={i} className="h-8 bg-surface rounded animate-pulse" />)}
@@ -161,7 +161,7 @@ export default function AdminAnalyticsPage() {
 
         {/* Content distribution */}
         <div className="bg-card border border-border rounded-xl p-5">
-          <p className="font-mono text-[10px] text-muted mb-4">// CONTENT DISTRIBUTION</p>
+          <p className="font-mono text-[10px] text-muted mb-4">{"// CONTENT DISTRIBUTION"}</p>
           <div className="space-y-3">
             {contentItems.map(item => {
               const total = Object.values(counts).reduce((s, n) => s + n, 0);
@@ -194,7 +194,7 @@ export default function AdminAnalyticsPage() {
       {/* Project status breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-card border border-border rounded-xl p-5">
-          <p className="font-mono text-[10px] text-muted mb-4">// PROJECT STATUS BREAKDOWN</p>
+          <p className="font-mono text-[10px] text-muted mb-4">{"// PROJECT STATUS BREAKDOWN"}</p>
           {counts.projects === 0 ? (
             <p className="text-dim text-xs">No projects yet.</p>
           ) : (
@@ -225,7 +225,7 @@ export default function AdminAnalyticsPage() {
 
         {/* Quick links to add content */}
         <div className="bg-card border border-border rounded-xl p-5">
-          <p className="font-mono text-[10px] text-muted mb-4">// QUICK ACTIONS</p>
+          <p className="font-mono text-[10px] text-muted mb-4">{"// QUICK ACTIONS"}</p>
           <div className="grid grid-cols-2 gap-2">
             {contentItems.map(item => (
               <Link key={item.label} href={item.href}

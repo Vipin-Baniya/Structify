@@ -83,7 +83,7 @@ export default function AdminDashboard() {
 
         {/* Top projects by views */}
         <div className="bg-card border border-border rounded-xl p-5">
-          <p className="font-mono text-[10px] text-muted mb-3">// TOP PROJECTS BY VIEWS</p>
+          <p className="font-mono text-[10px] text-muted mb-3">{"// TOP PROJECTS BY VIEWS"}</p>
           {topProjects.length === 0 ? (
             <p className="text-dim text-xs">No views yet.</p>
           ) : (
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
 
       {/* Quick actions */}
       <div className="bg-card border border-border rounded-xl p-5">
-        <p className="font-mono text-[10px] text-muted mb-3">// QUICK ACTIONS</p>
+        <p className="font-mono text-[10px] text-muted mb-3">{"// QUICK ACTIONS"}</p>
         <div className="grid grid-cols-2 gap-3">
           {cards.map(c => (
             <Link key={c.label} href={c.href}
