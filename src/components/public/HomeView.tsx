@@ -276,10 +276,10 @@ function EmptyState({ message }: { message: string }) {
 
 /* ─── Live stat card ─────────────────────────────────────────────────── */
 function LiveStatCard({
-  label, value, suffix, color, icon,
-}: { label: string; value: number; suffix: string; color: string; icon: string }) {
+  label, value, suffix, color, icon, href,
+}: { label: string; value: number; suffix: string; color: string; icon: string; href?: string }) {
   const count = useCountUp(value);
-  return (
+  const inner = (
     <motion.div
       className="bg-card border border-border rounded-2xl p-4 transition-colors group"
       whileHover={{ y: -3, borderColor: "rgba(29,185,84,0.3)", boxShadow: "0 12px 40px rgba(29,185,84,0.08)", transition: { duration: 0.2 } }}
@@ -294,6 +294,14 @@ function LiveStatCard({
       <p className="font-mono text-[10px] text-muted mt-1">{label}</p>
     </motion.div>
   );
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noreferrer" className="block">
+        {inner}
+      </a>
+    );
+  }
+  return inner;
 }
 
 /* ─── Testimonials preview ───────────────────────────────────────────── */
@@ -352,7 +360,7 @@ export default function HomeView() {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [certs,        setCerts]        = useState<Certificate[]>([]);
   const [skills,       setSkills]       = useState<Skill[]>([]);
-  const [profile,      setProfile]      = useState<{ resumeUrl?: string; liveDashboard?: { leetcode?: number; gfgScore?: number; githubCommits?: number } } | null>(null);
+  const [profile,      setProfile]      = useState<{ resumeUrl?: string; liveDashboard?: { leetcode?: number; gfgScore?: number; githubCommits?: number; leetcodeUrl?: string; gfgUrl?: string; githubUrl?: string } } | null>(null);
   const [mounted,      setMounted]      = useState(false);
   const { setProject } = usePlayer();
 
@@ -361,7 +369,7 @@ export default function HomeView() {
     fetch("/api/achievements").then(r => r.json()).then(d => Array.isArray(d) && setAchievements(d.slice(0, 4)));
     fetch("/api/certificates").then(r => r.json()).then(d => Array.isArray(d) && setCerts(d.slice(0, 4)));
     fetch("/api/skills").then(r => r.json()).then(d => Array.isArray(d) && setSkills(d.slice(0, 16)));
-    fetch("/api/profile").then(r => r.json()).then(d => d && setProfile(d)).catch(() => {});
+    fetch("/api/profile", { cache: "no-store" }).then(r => r.json()).then(d => d && !d.error && setProfile(d)).catch(() => {});
     setTimeout(() => setMounted(true), 60);
   }, []);
 
@@ -512,9 +520,9 @@ export default function HomeView() {
           </span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <LiveStatCard label="LeetCode"      value={profile?.liveDashboard?.leetcode      ?? 300}  suffix="+" color="text-yellow-400" icon="♥" />
-          <LiveStatCard label="GFG Score"     value={profile?.liveDashboard?.gfgScore      ?? 1200} suffix="+" color="text-green"      icon="⚡" />
-          <LiveStatCard label="GitHub Commits" value={profile?.liveDashboard?.githubCommits ?? 500}  suffix="+" color="text-blue-400"   icon="○" />
+          <LiveStatCard label="LeetCode"      value={profile?.liveDashboard?.leetcode      ?? 300}  suffix="+" color="text-yellow-400" icon="♥" href={profile?.liveDashboard?.leetcodeUrl || undefined} />
+          <LiveStatCard label="GFG Score"     value={profile?.liveDashboard?.gfgScore      ?? 1200} suffix="+" color="text-green"      icon="⚡" href={profile?.liveDashboard?.gfgUrl     || undefined} />
+          <LiveStatCard label="GitHub Commits" value={profile?.liveDashboard?.githubCommits ?? 500}  suffix="+" color="text-blue-400"   icon="○" href={profile?.liveDashboard?.githubUrl   || undefined} />
           <LiveStatCard label="Projects Built" value={projects.length} suffix=""  color="text-purple-400" icon="▦" />
         </div>
       </motion.section>
