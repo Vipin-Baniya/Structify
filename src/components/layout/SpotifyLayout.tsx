@@ -3,6 +3,7 @@ import Sidebar      from "@/components/layout/Sidebar";
 import PlayerBar    from "@/components/layout/PlayerBar";
 import { PlayerProvider }  from "@/components/ui/PlayerContext";
 import { CommandPalette }  from "@/components/core/CommandPalette";
+import { AdminFAB }        from "@/components/core/AdminFAB";
 
 /**
  * Default Spotify-inspired dark layout used when no specific OS theme is active.
@@ -37,6 +38,9 @@ export default function SpotifyLayout({
 
       {/* Sticky Spotify-style project player bar */}
       <PlayerBar />
+
+      {/* Floating admin button (only visible when admin session is active) */}
+      <AdminFAB />
     </PlayerProvider>
   );
 }

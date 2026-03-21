@@ -5,7 +5,8 @@
 @tailwind utilities;
 
 /* ── CSS VARIABLES (defaults = Onyx theme) ───────────────────────────── */
-:root {
+:root,
+html[data-theme="onyx"] {
   --bg:       #0E0C09;
   --surface:  #161310;
   --card:     #1E1A15;
@@ -20,6 +21,76 @@
   --font-heading: 'Syne', sans-serif;
   --font-body:    'Inter', sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
+}
+
+/* ── THEME: Aurora ────────────────────────────────────────────────────── */
+html[data-theme="aurora"] {
+  --bg:       #08061A;
+  --surface:  #0D0B22;
+  --card:     #130F2E;
+  --border:   #261D52;
+  --text:     #EAE0FF;
+  --muted:    #9B8DC7;
+  --dim:      #4A3D7A;
+  --accent:   #A855F7;
+  --accent-2: #A855F718;
+  --accent-3: #A855F70C;
+}
+
+/* ── THEME: Slate ─────────────────────────────────────────────────────── */
+html[data-theme="slate"] {
+  --bg:       #0D1117;
+  --surface:  #161B22;
+  --card:     #1C2128;
+  --border:   #30363D;
+  --text:     #E6EDF3;
+  --muted:    #8B949E;
+  --dim:      #484F58;
+  --accent:   #FF7043;
+  --accent-2: #FF704318;
+  --accent-3: #FF70430C;
+}
+
+/* ── THEME: Parchment ─────────────────────────────────────────────────── */
+html[data-theme="parchment"] {
+  --bg:       #F5F0E6;
+  --surface:  #EDE7D4;
+  --card:     #E5DCC6;
+  --border:   #C8BCA0;
+  --text:     #2C2416;
+  --muted:    #6A5A44;
+  --dim:      #9C8A72;
+  --accent:   #0F766E;
+  --accent-2: #0F766E18;
+  --accent-3: #0F766E0C;
+}
+
+/* ── THEME: Crimson ───────────────────────────────────────────────────── */
+html[data-theme="crimson"] {
+  --bg:       #0D0608;
+  --surface:  #140A0C;
+  --card:     #1C0E10;
+  --border:   #2E1418;
+  --text:     #F5D4D8;
+  --muted:    #9C7880;
+  --dim:      #5A3840;
+  --accent:   #E83848;
+  --accent-2: #E8384818;
+  --accent-3: #E838480C;
+}
+
+/* ── THEME: Matrix ────────────────────────────────────────────────────── */
+html[data-theme="matrix"] {
+  --bg:       #000300;
+  --surface:  #010A01;
+  --card:     #021204;
+  --border:   #0A2A0A;
+  --text:     #4AE54A;
+  --muted:    #1E8C1E;
+  --dim:      #0D4D0D;
+  --accent:   #00FF41;
+  --accent-2: #00FF4118;
+  --accent-3: #00FF410C;
 }
 
 /* ── BASE ────────────────────────────────────────────────────────────── */
@@ -82,8 +153,8 @@ html.os-android { --radius: 16px; }
 /* ── OS: iOS ─────────────────────────────────────────────────────────── */
 html.os-ios { --radius: 14px; }
 
-/* ── PARCHMENT: light theme needs body bg override ───────────────────── */
-html[data-theme="parchment"] body { background: #F5F0E6; }
+/* ── PARCHMENT: light theme body override ────────────────────────────── */
+html[data-theme="parchment"] body { background: #F5F0E6; color: #2C2416; }
 
 /* ── MATRIX: full monospace + scanline ───────────────────────────────── */
 html[data-theme="matrix"] * { font-family: var(--font-mono) !important; }
