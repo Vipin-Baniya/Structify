@@ -11,6 +11,7 @@ import { AdminFAB }        from "@/components/core/AdminFAB";
 import { PlayerProvider }  from "@/components/ui/PlayerContext";
 import { CommandPalette }  from "@/components/core/CommandPalette";
 import { OSThemeSwitcher } from "@/components/core/OSThemeSwitcher";
+import { ThemeSwitcher }   from "@/components/core/ThemeSwitcher";
 
 const NAV = [
   { href: "/home",         icon: Home,      label: "Home",         emoji: "🏠" },
@@ -96,6 +97,7 @@ export default function WindowsLayout({
 
           {/* System tray */}
           <div className="ml-auto flex items-center gap-2">
+            <ThemeSwitcher />
             <OSThemeSwitcher />
             <span className="text-[10px] text-[#aaa] hidden sm:block">
               {new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}

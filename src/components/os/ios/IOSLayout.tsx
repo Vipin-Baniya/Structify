@@ -11,6 +11,7 @@ import { AdminFAB }        from "@/components/core/AdminFAB";
 import { PlayerProvider }  from "@/components/ui/PlayerContext";
 import { CommandPalette }  from "@/components/core/CommandPalette";
 import { OSThemeSwitcher } from "@/components/core/OSThemeSwitcher";
+import { ThemeSwitcher }   from "@/components/core/ThemeSwitcher";
 
 const NAV = [
   { href: "/home",         icon: Home,      label: "Home"     },
@@ -95,6 +96,7 @@ export default function IOSLayout({
               />
             </div>
           </form>
+          <ThemeSwitcher />
           <OSThemeSwitcher />
         </div>
 

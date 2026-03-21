@@ -376,7 +376,7 @@ export default function HomeView() {
       {/* ══════════════════════════════════════════════════════════════ */}
       {/* HERO                                                           */}
       {/* ══════════════════════════════════════════════════════════════ */}
-      <section className={`relative transition-all duration-600 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+      <section className={`relative transition-opacity duration-500 ${mounted ? "opacity-100" : "opacity-0"}`}>
         {/* Glow orbs */}
         <div className="absolute -top-16 -left-16 w-80 h-80 rounded-full bg-green/5 blur-3xl pointer-events-none animate-float" />
         <div className="absolute -top-8 right-0 w-60 h-60 rounded-full bg-green/[0.03] blur-3xl pointer-events-none animate-float" style={{ animationDelay: "3s" }} />

@@ -7,6 +7,7 @@ import { AdminFAB }        from "@/components/core/AdminFAB";
 import { PlayerProvider }  from "@/components/ui/PlayerContext";
 import { CommandPalette }  from "@/components/core/CommandPalette";
 import { OSThemeSwitcher } from "@/components/core/OSThemeSwitcher";
+import { ThemeSwitcher }   from "@/components/core/ThemeSwitcher";
 
 const NAV_ITEMS = [
   { href: "/home",         cmd: "home",         label: "Home",         desc: "Portfolio landing page" },
@@ -117,6 +118,7 @@ export default function TerminalLayout({
           <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
           <span className="w-3 h-3 rounded-full bg-[#28c840]" />
           <span className="ml-2 flex-1 text-center text-[#888]">vipin@portfolio: ~/{currentCmd}</span>
+          <ThemeSwitcher />
           <OSThemeSwitcher />
         </div>
 
