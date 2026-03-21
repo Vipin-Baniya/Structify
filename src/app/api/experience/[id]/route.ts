@@ -11,9 +11,10 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   try {
     await connectDB();
     const body = await req.json();
+    const { _id, __v, createdAt, updatedAt, ...updateData } = body;
     const item = await Experience.findOneAndUpdate(
       { _id: params.id, ownerId: OWNER_ID },
-      { $set: body },
+      { $set: updateData },
       { new: true }
     );
     if (!item) return err("Not found", 404);

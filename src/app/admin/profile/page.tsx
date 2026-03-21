@@ -90,7 +90,7 @@ export default function AdminProfilePage() {
 
   // ── Live Dashboard helpers ───────────────────────────────────────
   function setDashboard(key: keyof LiveDashboard, val: string) {
-    const num = parseInt(val, 10);
+    const num = val === "" ? 0 : parseInt(val, 10);
     if (isNaN(num)) return;
     setData(d => ({ ...d, liveDashboard: { ...d.liveDashboard, [key]: num } }));
   }
@@ -128,14 +128,32 @@ export default function AdminProfilePage() {
     e.preventDefault();
     setLoading(true);
     setSaved(false);
-    await fetch("/api/profile", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    setLoading(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    try {
+      const res = await fetch("/api/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        if (updated && !updated.error) {
+          setData(prev => ({
+            ...prev,
+            ...updated,
+            liveDashboard: { ...prev.liveDashboard, ...(updated.liveDashboard ?? {}) },
+          }));
+        }
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
+      } else {
+        const body = await res.json().catch(() => ({}));
+        alert(`Failed to save: ${body.error || res.statusText}`);
+      }
+    } catch {
+      alert("Failed to save profile. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

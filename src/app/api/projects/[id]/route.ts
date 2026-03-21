@@ -39,11 +39,11 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   try {
     await connectDB();
     const body = await req.json();
-    // Never let a PATCH overwrite the views counter
-    delete body.views;
+    // Strip MongoDB internal fields and never overwrite the views counter
+    const { _id, __v, createdAt, updatedAt, views, ...updateData } = body;
     const project = await Project.findOneAndUpdate(
       { _id: params.id, ownerId: OWNER_ID },
-      { $set: body },
+      { $set: updateData },
       { new: true }
     );
     if (!project) return err("Not found", 404);

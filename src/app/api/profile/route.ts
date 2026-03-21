@@ -44,9 +44,11 @@ export async function PUT(req: NextRequest) {
   try {
     await connectDB();
     const body = await req.json();
+    // Strip MongoDB internal fields to prevent immutable field errors
+    const { _id, __v, createdAt, updatedAt, ...updateData } = body;
     const profile = await Profile.findOneAndUpdate(
       { ownerId: OWNER_ID },
-      { $set: { ...body, ownerId: OWNER_ID } },
+      { $set: { ...updateData, ownerId: OWNER_ID } },
       { new: true, upsert: true }
     );
     return ok(profile);
