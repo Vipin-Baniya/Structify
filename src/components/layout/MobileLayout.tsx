@@ -7,6 +7,7 @@ import {
   Briefcase, Cpu, User, Mail, Search, BookOpen, Quote, Compass,
 } from "lucide-react";
 import { OSThemeSwitcher } from "@/components/core/OSThemeSwitcher";
+import { ThemeSwitcher }   from "@/components/core/ThemeSwitcher";
 
 const NAV = [
   { href: "/home",         icon: Home,      label: "Home" },
@@ -96,6 +97,10 @@ export default function MobileLayout({ active }: { active?: string }) {
           })}
         </nav>
         <div className="px-6 py-4 border-t border-border space-y-1">
+          <div className="mb-2">
+            <p className="font-mono text-[9px] text-dim uppercase tracking-wider mb-1">Color Theme</p>
+            <ThemeSwitcher />
+          </div>
           <OSThemeSwitcher />
           <p className="font-mono text-[10px] text-dim">Architect: Vipin Baniya</p>
           <p className="font-mono text-[9px] text-border mt-0.5">vipinbaniya.dev</p>

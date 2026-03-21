@@ -8,6 +8,7 @@ import {
   Cpu, User, Mail, ChevronRight, Search, BookOpen, Quote, Compass,
 } from "lucide-react";
 import { OSThemeSwitcher } from "@/components/core/OSThemeSwitcher";
+import { ThemeSwitcher }   from "@/components/core/ThemeSwitcher";
 
 const NAV = [
   { href: "/home",         icon: Home,      label: "Home" },
@@ -82,6 +83,10 @@ export default function Sidebar({ active }: { active?: string }) {
       </nav>
 
       <div className="px-3 py-3 border-t border-border space-y-2">
+        <div className="bg-card border border-border rounded-xl px-3 py-2 hover:border-green/30 transition-colors">
+          <p className="font-mono text-[9px] text-dim uppercase tracking-wider mb-1.5">Color Theme</p>
+          <ThemeSwitcher />
+        </div>
         <div className="bg-card border border-border rounded-xl px-3 py-2 hover:border-green/30 transition-colors">
           <p className="font-mono text-[9px] text-dim uppercase tracking-wider mb-1.5">Switch OS Theme</p>
           <OSThemeSwitcher />

@@ -7,6 +7,7 @@ import {
   Briefcase, Quote, User, Mail, Search,
 } from "lucide-react";
 import PlayerBar           from "@/components/layout/PlayerBar";
+import { AdminFAB }        from "@/components/core/AdminFAB";
 import { PlayerProvider }  from "@/components/ui/PlayerContext";
 import { CommandPalette }  from "@/components/core/CommandPalette";
 import { OSThemeSwitcher } from "@/components/core/OSThemeSwitcher";
@@ -134,6 +135,7 @@ export default function IOSLayout({
       </div>
 
       <PlayerBar />
+      <AdminFAB />
     </PlayerProvider>
   );
 }

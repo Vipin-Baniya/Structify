@@ -1,5 +1,6 @@
 "use client";
 import dynamic      from "next/dynamic";
+import { useState, useEffect } from "react";
 import { useOS }   from "@/hooks/useOS";
 import SpotifyLayout from "@/components/layout/SpotifyLayout";
 
@@ -16,7 +17,16 @@ interface Props {
 }
 
 export default function LayoutRouter({ children, active }: Props) {
-  const { os } = useOS();
+  const { os }          = useOS();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
+
+  // During SSR and the initial client render (before hydration), always use
+  // SpotifyLayout.  This prevents a brief flash of the wrong layout — and
+  // prevents the admin-control transition from appearing while the session
+  // and OS preference are still loading.
+  if (!mounted) return <SpotifyLayout active={active}>{children}</SpotifyLayout>;
 
   switch (os) {
     case "macos":   return <MacLayout     active={active}>{children}</MacLayout>;
