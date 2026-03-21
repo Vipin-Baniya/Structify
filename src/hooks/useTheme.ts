@@ -57,6 +57,7 @@ export const THEME_OPTIONS: ThemeOption[] = [
 ];
 
 const STORAGE_KEY = "structify-color-theme";
+const EVENT_NAME  = "structify:theme-change";
 const isBrowser   = typeof window !== "undefined";
 
 export function useTheme() {
@@ -71,11 +72,22 @@ export function useTheme() {
     document.documentElement.setAttribute("data-theme", initial);
   }, []);
 
+  // Sync all hook instances when any one of them changes the theme
+  useEffect(() => {
+    if (!isBrowser) return;
+    function handleChange(e: Event) {
+      setThemeState((e as CustomEvent<ColorTheme>).detail);
+    }
+    window.addEventListener(EVENT_NAME, handleChange);
+    return () => window.removeEventListener(EVENT_NAME, handleChange);
+  }, []);
+
   const setTheme = useCallback((value: ColorTheme) => {
     setThemeState(value);
     if (isBrowser) {
       localStorage.setItem(STORAGE_KEY, value);
       document.documentElement.setAttribute("data-theme", value);
+      window.dispatchEvent(new CustomEvent<ColorTheme>(EVENT_NAME, { detail: value }));
     }
   }, []);
 
