@@ -1,11 +1,14 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Plus, Trash2, Upload } from "lucide-react";
+import { Plus, Trash2, Upload, RefreshCw } from "lucide-react";
 import { Field, Input, Textarea, FormActions } from "@/components/admin/FormFields";
 
 interface PhilosophyEntry { title: string; description: string; }
 interface ContactLink     { label: string; href: string; icon: string; color: string; }
-interface LiveDashboard   { leetcode: number; gfgScore: number; githubCommits: number; }
+interface LiveDashboard   {
+  leetcode: number; gfgScore: number; githubCommits: number;
+  leetcodeUrl: string; gfgUrl: string; githubUrl: string;
+}
 interface ProfileData {
   name: string;
   tagline: string;
@@ -20,7 +23,7 @@ interface ProfileData {
 const DEFAULT_PROFILE: ProfileData = {
   name: "", tagline: "", bio: "", avatarUrl: "", resumeUrl: "",
   philosophy: [], links: [],
-  liveDashboard: { leetcode: 0, gfgScore: 0, githubCommits: 0 },
+  liveDashboard: { leetcode: 0, gfgScore: 0, githubCommits: 0, leetcodeUrl: "", gfgUrl: "", githubUrl: "" },
 };
 
 export default function AdminProfilePage() {
@@ -28,6 +31,8 @@ export default function AdminProfilePage() {
   const [loading, setLoading]     = useState(false);
   const [saved, setSaved]         = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [syncing, setSyncing]     = useState(false);
+  const [syncMsg, setSyncMsg]     = useState<string | null>(null);
   const resumeFileRef             = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -90,6 +95,10 @@ export default function AdminProfilePage() {
 
   // ── Live Dashboard helpers ───────────────────────────────────────
   function setDashboard(key: keyof LiveDashboard, val: string) {
+    if (key === "leetcodeUrl" || key === "gfgUrl" || key === "githubUrl") {
+      setData(d => ({ ...d, liveDashboard: { ...d.liveDashboard, [key]: val } }));
+      return;
+    }
     const num = val === "" ? 0 : parseInt(val, 10);
     if (isNaN(num)) return;
     setData(d => ({ ...d, liveDashboard: { ...d.liveDashboard, [key]: num } }));
@@ -122,6 +131,32 @@ export default function AdminProfilePage() {
       }
     };
     reader.readAsDataURL(file);
+  }
+
+  async function handleSync() {
+    setSyncing(true);
+    setSyncMsg(null);
+    try {
+      const res = await fetch("/api/profile/sync", { method: "POST" });
+      const d = await res.json();
+      if (res.ok) {
+        if (d.liveDashboard) {
+          setData(prev => ({
+            ...prev,
+            liveDashboard: { ...prev.liveDashboard, ...d.liveDashboard },
+          }));
+        }
+        const warn = d.errors?.length ? ` (${d.errors.join(", ")})` : "";
+        setSyncMsg(`✓ Stats synced${warn}`);
+      } else {
+        setSyncMsg(`✗ ${d.error || "Sync failed"}`);
+      }
+    } catch {
+      setSyncMsg("✗ Sync request failed");
+    } finally {
+      setSyncing(false);
+      setTimeout(() => setSyncMsg(null), 5000);
+    }
   }
 
   async function handleSave(e: React.FormEvent) {
@@ -305,12 +340,67 @@ export default function AdminProfilePage() {
 
         {/* ── Live Dashboard ────────────────────────────────────── */}
         <section className="bg-card border border-border rounded-xl p-6 space-y-4">
-          <div>
-            <p className="font-mono text-[10px] text-muted">{"// LIVE · DASHBOARD"}</p>
-            <p className="text-[10px] text-dim mt-1">Numbers shown in the live stats section on the home page.</p>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="font-mono text-[10px] text-muted">{"// LIVE · DASHBOARD"}</p>
+              <p className="text-[10px] text-dim mt-1">
+                Add your profile URLs below and click &quot;Sync Stats&quot; to auto-fetch live numbers,
+                or edit the counts manually and save.
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-1 shrink-0">
+              <button
+                type="button"
+                onClick={handleSync}
+                disabled={syncing}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-border rounded-lg text-xs text-muted hover:text-text disabled:opacity-60 transition-colors font-mono"
+              >
+                <RefreshCw size={12} className={syncing ? "animate-spin" : ""} />
+                {syncing ? "Syncing…" : "Sync Stats"}
+              </button>
+              {syncMsg && (
+                <span className={`text-[10px] font-mono ${syncMsg.startsWith("✓") ? "text-green" : "text-red-400"}`}>
+                  {syncMsg}
+                </span>
+              )}
+            </div>
           </div>
+
+          {/* Profile URLs */}
           <div className="grid grid-cols-3 gap-4">
-            <Field label="LeetCode Score">
+            <Field label="LeetCode Profile URL" hint="e.g. https://leetcode.com/username">
+              <input
+                type="url"
+                value={data.liveDashboard.leetcodeUrl}
+                onChange={e => setDashboard("leetcodeUrl", e.target.value)}
+                placeholder="https://leetcode.com/username"
+                className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text outline-none focus:border-green/40 transition-colors"
+              />
+            </Field>
+            <Field label="GFG Profile URL" hint="e.g. https://auth.geeksforgeeks.org/user/username">
+              <input
+                type="url"
+                value={data.liveDashboard.gfgUrl}
+                onChange={e => setDashboard("gfgUrl", e.target.value)}
+                placeholder="https://auth.geeksforgeeks.org/user/username"
+                className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text outline-none focus:border-green/40 transition-colors"
+              />
+            </Field>
+            <Field label="GitHub Profile URL" hint="e.g. https://github.com/username">
+              <input
+                type="url"
+                value={data.liveDashboard.githubUrl}
+                onChange={e => setDashboard("githubUrl", e.target.value)}
+                placeholder="https://github.com/username"
+                className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text outline-none focus:border-green/40 transition-colors"
+              />
+            </Field>
+          </div>
+
+          {/* Manual overrides */}
+          <p className="font-mono text-[10px] text-dim">{"// manual override (or result after sync)"}</p>
+          <div className="grid grid-cols-3 gap-4">
+            <Field label="LeetCode Solved">
               <input
                 type="number" min={0}
                 value={data.liveDashboard.leetcode}

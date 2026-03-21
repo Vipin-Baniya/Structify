@@ -3,6 +3,8 @@ import { connectDB } from "@/lib/db";
 import Profile from "@/models/Profile";
 import { requireAdmin, ok, err, OWNER_ID } from "@/lib/apiHelpers";
 
+export const dynamic = "force-dynamic";
+
 const DEFAULTS = {
   name: "Vipin Baniya",
   tagline: "The architect behind Structify.",
@@ -21,7 +23,7 @@ const DEFAULTS = {
     { label: "LeetCode", icon: "◈", href: "https://leetcode.com/vipinbaniya",    color: "#F59E0B" },
     { label: "Email",    icon: "◌", href: "mailto:vipin@example.com",             color: "#1DB954" },
   ],
-  liveDashboard: { leetcode: 300, gfgScore: 1200, githubCommits: 500 },
+  liveDashboard: { leetcode: 300, gfgScore: 1200, githubCommits: 500, leetcodeUrl: "", gfgUrl: "", githubUrl: "" },
 };
 
 export async function GET() {

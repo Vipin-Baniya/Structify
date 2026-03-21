@@ -26,6 +26,9 @@ const ProfileSchema = new Schema(
       leetcode:      { type: Number, default: 0 },
       gfgScore:      { type: Number, default: 0 },
       githubCommits: { type: Number, default: 0 },
+      leetcodeUrl:   { type: String, default: "" },
+      gfgUrl:        { type: String, default: "" },
+      githubUrl:     { type: String, default: "" },
     },
   },
   { timestamps: true }
