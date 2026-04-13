@@ -126,7 +126,7 @@ export default function LandingPage() {
         <p>{"}"}</p>
       </div>
       <div className="absolute bottom-16 left-8 text-[10px] font-mono text-green/10 pointer-events-none hidden lg:block select-none leading-relaxed">
-        <p>$ structify init portfolio</p>
+        <p>$ portfolio website</p>
         <p className="text-green/15">&#x2713; identity deployed</p>
         <p className="text-green/15">&#x2713; systems live</p>
       </div>
